@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Fr4nxs AI - Uncensored Assistant</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -85,6 +85,7 @@
         .glass-effect {
             background: rgba(20, 20, 20, 0.7);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 215, 0, 0.15);
             transition: all 0.3s ease;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
@@ -126,7 +127,7 @@
             width: 100%;
             max-width: 400px;
             transition: all 0.3s;
-            font-size: 0.95rem;
+            font-size: 16px;
             letter-spacing: 0.3px;
             -webkit-appearance: none;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -163,6 +164,8 @@
             box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
             color: #000000;
             font-weight: 600;
+            min-height: 48px;
+            cursor: pointer;
         }
         
         @media (max-width: 640px) {
@@ -213,7 +216,9 @@
             border-radius: 30px;
             font-weight: 500;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            min-height: 44px;
         }
         
         @media (max-width: 768px) {
@@ -221,7 +226,7 @@
                 top: 10px;
                 right: 10px;
                 padding: 8px 16px;
-                font-size: 0.9rem;
+                font-size: 14px;
             }
         }
         
@@ -258,17 +263,26 @@
         .model-indicator {
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 215, 0, 0.3);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
         
         .chat-messages {
-            height: clamp(350px, 55vh, 550px);
+            height: clamp(350px, 60vh, 550px);
             scrollbar-width: thin;
             scrollbar-color: #ffd700 #1a1a1a;
             -webkit-overflow-scrolling: touch;
             scroll-behavior: smooth;
             transition: scroll-top 0.3s ease;
+            overscroll-behavior: contain;
+        }
+        
+        @media (max-width: 640px) {
+            .chat-messages {
+                height: calc(100vh - 380px);
+                min-height: 300px;
+            }
         }
         
         .chat-messages::-webkit-scrollbar {
@@ -314,6 +328,7 @@
             bottom: 0;
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -331,6 +346,15 @@
             position: relative;
             animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        @media (max-width: 640px) {
+            .modal-content {
+                padding: 30px 20px;
+                width: 95%;
+            }
         }
         
         .modal-close {
@@ -357,7 +381,7 @@
         }
         
         .modal-title {
-            font-size: 32px;
+            font-size: clamp(24px, 6vw, 32px);
             font-weight: 800;
             margin-bottom: 20px;
             background: linear-gradient(135deg, #ffd700, #daa520);
@@ -406,6 +430,7 @@
             font-size: 18px;
             letter-spacing: 1px;
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+            min-height: 56px;
         }
         
         .modal-button:hover {
@@ -422,14 +447,15 @@
         }
         
         /* Better touch targets for mobile */
-        button, a {
+        button, a, input, .clickable {
             min-height: 48px;
             min-width: 48px;
+            touch-action: manipulation;
         }
         
         /* Responsive font sizes */
         h1 {
-            font-size: clamp(2.5rem, 10vw, 6rem);
+            font-size: clamp(2rem, 8vw, 6rem);
             text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
         }
         
@@ -445,6 +471,16 @@
                 padding-top: env(safe-area-inset-top);
                 padding-bottom: env(safe-area-inset-bottom);
             }
+            
+            .clear-button {
+                top: calc(20px + env(safe-area-inset-top));
+                right: calc(20px + env(safe-area-inset-right));
+            }
+            
+            .scroll-controls {
+                bottom: calc(100px + env(safe-area-inset-bottom));
+                right: calc(20px + env(safe-area-inset-right));
+            }
         }
         
         /* Landscape mode adjustments */
@@ -457,6 +493,14 @@
                 padding: 20px;
                 max-height: 90vh;
                 overflow-y: auto;
+            }
+            
+            header {
+                margin-bottom: 10px;
+            }
+            
+            .container {
+                padding-top: 40px;
             }
         }
 
@@ -536,6 +580,7 @@
             border-radius: 20px;
             border: 1px solid rgba(255, 215, 0, 0.2);
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         .vibe-bar {
@@ -583,7 +628,9 @@
             cursor: pointer;
             transition: all 0.3s;
             backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             font-size: 20px;
+            touch-action: manipulation;
         }
 
         .scroll-btn:hover {
@@ -634,6 +681,34 @@
         .vibe-energetic { color: #ffd700; }
         .vibe-deep { color: #b19cd9; }
         .vibe-playful { color: #ffb6c1; }
+        
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            .flex-col-mobile {
+                flex-direction: column;
+            }
+            
+            .message-bubble-ai, .message-bubble-user {
+                padding: 12px;
+                font-size: 14px;
+            }
+            
+            .glass-effect {
+                border-radius: 20px;
+            }
+            
+            #userInput {
+                font-size: 16px;
+                padding: 14px 16px;
+            }
+        }
+        
+        /* Prevent zoom on input focus for iOS */
+        @supports (-webkit-touch-callout: none) {
+            input, textarea, select, button {
+                font-size: 16px !important;
+            }
+        }
     </style>
 </head>
 <body class="gradient-bg text-gray-200 min-h-screen relative">
@@ -643,7 +718,7 @@
     <!-- Welcome Modal -->
     <div id="welcomeModal" class="modal-overlay">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">×</button>
+            <button class="modal-close" onclick="closeModal()" aria-label="Close">×</button>
             <div class="modal-title">✨ Fr4nxs AI</div>
             <div class="modal-text">
                 Welcome to my most sophisticated uncensored AI assistant. Experience true freedom in conversation with my cool ahh platform.
@@ -690,19 +765,19 @@
         Clear History
     </button>
 
-    <div class="container mx-auto max-w-4xl px-3 sm:px-4 py-4 relative z-10">
+    <div class="container mx-auto max-w-4xl px-3 sm:px-4 py-4 relative z-10" style="padding-bottom: env(safe-area-inset-bottom);">
         <!-- Header -->
-        <header class="text-center mb-8 relative pt-16 sm:pt-0">
-            <div class="floating mb-4">
-                <h1 class="font-black mb-3 tracking-tight leading-tight">
+        <header class="text-center mb-6 relative pt-16 sm:pt-0">
+            <div class="floating mb-3">
+                <h1 class="font-black mb-2 tracking-tight leading-tight">
                     <span class="gradient-text">
                         Fr4nxs AI
                     </span>
                 </h1>
-                <p class="text-sm text-yellow-600/80">Created by <span class="text-yellow-400 font-semibold">Userfr4nxs</span></p>
+                <p class="text-xs text-yellow-600/80">Created by <span class="text-yellow-400 font-semibold">Userfr4nxs</span></p>
             </div>
             <!-- Memory and Vibe indicators -->
-            <div class="flex justify-center items-center gap-3 mb-2 flex-wrap">
+            <div class="flex justify-center items-center gap-2 mb-2 flex-wrap">
                 <div class="memory-indicator">
                     <span class="memory-dot"></span>
                     <span>Memory: <span id="memoryCount">0</span> msgs</span>
@@ -719,23 +794,26 @@
         </header>
 
         <!-- API Key Section -->
-        <div class="mb-8 text-center">
-            <div class="glass-effect rounded-2xl p-5 sm:p-6 max-w-2xl mx-auto">
-                <div class="flex flex-col items-center space-y-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-3 h-3 bg-yellow-500 rounded-full status-dot"></div>
-                        <span class="text-sm font-light text-yellow-500 tracking-wide">Enter the API to start chatting! | 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 | • Fast & Free</span>
+        <div class="mb-6 text-center">
+            <div class="glass-effect rounded-2xl p-4 sm:p-6 max-w-2xl mx-auto">
+                <div class="flex flex-col items-center space-y-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-yellow-500 rounded-full status-dot"></div>
+                        <span class="text-xs font-light text-yellow-500 tracking-wide">Enter the API to start chatting!: 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 </span>
                     </div>
                     
-                    <div class="flex flex-col w-full space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3">
+                    <div class="flex flex-col w-full space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
                         <input 
                             type="password" 
                             id="apiKeyInput" 
-                            class="api-key-input flex-1 text-sm sm:text-base" 
+                            class="api-key-input flex-1 text-sm" 
                             placeholder="Enter your Groq API Key"
                             value=""
+                            inputmode="text"
+                            autocapitalize="off"
+                            spellcheck="false"
                         >
-                        <button id="saveApiKeyBtn" class="save-button text-black font-medium px-6 sm:px-8 py-3.5 rounded-xl whitespace-nowrap tracking-wide text-sm sm:text-base">
+                        <button id="saveApiKeyBtn" class="save-button text-black font-medium px-6 py-3 rounded-xl whitespace-nowrap tracking-wide text-sm">
                             Save Key
                         </button>
                     </div>
@@ -745,18 +823,18 @@
         </div>
 
         <!-- Model Display with Fallback Options -->
-        <div class="mb-6 flex justify-center gap-3 flex-wrap">
-            <div class="model-indicator rounded-full px-6 sm:px-8 py-2.5 sm:py-3 inline-flex items-center space-x-3">
-                <span class="relative flex h-3 w-3">
+        <div class="mb-4 flex justify-center gap-2 flex-wrap">
+            <div class="model-indicator rounded-full px-4 sm:px-6 py-2 inline-flex items-center space-x-2">
+                <span class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-500 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-yellow-600"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-yellow-600"></span>
                 </span>
-                <span class="text-sm font-light tracking-wide text-yellow-500">
+                <span class="text-xs font-light tracking-wide text-yellow-500">
                     Primary: Llama 3.3 70B
                 </span>
             </div>
-            <div class="model-indicator rounded-full px-6 sm:px-8 py-2.5 sm:py-3 inline-flex items-center space-x-3">
-                <span class="text-sm font-light tracking-wide text-yellow-500">
+            <div class="model-indicator rounded-full px-4 sm:px-6 py-2 inline-flex items-center space-x-2">
+                <span class="text-xs font-light tracking-wide text-yellow-500">
                     Fallback: Mixtral 8x7B
                 </span>
             </div>
@@ -765,34 +843,36 @@
         <!-- Chat Container -->
         <div class="glass-effect rounded-2xl shadow-2xl overflow-hidden border border-yellow-500/20">
             <!-- Chat Messages -->
-            <div id="chatMessages" class="chat-messages overflow-y-auto p-4 sm:p-6 space-y-4 bg-black/20">
+            <div id="chatMessages" class="chat-messages overflow-y-auto p-3 sm:p-5 space-y-3 bg-black/20">
                 <!-- Messages will be loaded here from localStorage -->
             </div>
 
             <!-- Input Area -->
-            <div class="p-4 sm:p-5 bg-black/40 border-t border-yellow-500/20">
-                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+            <div class="p-3 sm:p-4 bg-black/40 border-t border-yellow-500/20">
+                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                     <input 
                         type="text" 
                         id="userInput"
-                        placeholder="Ask me anything - no filters, no warnings..." 
-                        class="flex-1 bg-black/60 text-gray-200 rounded-xl px-5 sm:px-6 py-4 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 border border-yellow-500/20 placeholder-yellow-700/50 font-light tracking-wide text-sm sm:text-base"
+                        placeholder="Ask me anything - no filters..." 
+                        class="flex-1 bg-black/60 text-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 border border-yellow-500/20 placeholder-yellow-700/50 font-light tracking-wide text-base"
                         autocomplete="off"
+                        inputmode="text"
+                        enterkeyhint="send"
                     >
                     <button 
                         id="sendButton"
-                        class="send-button text-black font-medium px-8 sm:px-10 py-4 rounded-xl disabled:opacity-40 disabled:cursor-not-allowed tracking-wide text-sm sm:text-base"
+                        class="send-button text-black font-medium px-6 py-3 rounded-xl disabled:opacity-40 disabled:cursor-not-allowed tracking-wide text-base"
                     >
                         Send
                     </button>
                 </div>
-                <p class="text-xs text-yellow-700/70 mt-3 text-center font-light tracking-wide">Press Enter to send • No filters • Complete freedom • Full conversation memory • Created by Userfr4nxs</p>
+                <p class="text-xs text-yellow-700/70 mt-2 text-center font-light tracking-wide">Press Enter to send • No filters • Full memory • Created by Userfr4nxs</p>
             </div>
         </div>
 
         <!-- Status -->
-        <div class="mt-5 text-center text-sm text-yellow-600">
-            <span id="status" class="inline-flex items-center px-4 py-2 glass-effect rounded-full font-light">
+        <div class="mt-4 text-center text-xs text-yellow-600">
+            <span id="status" class="inline-flex items-center px-3 py-2 glass-effect rounded-full font-light">
                 <span class="w-2 h-2 bg-yellow-500 rounded-full status-dot mr-2"></span>
                 Ready to connect
             </span>
@@ -820,7 +900,7 @@
         const MAX_HISTORY = 100;
         const CONTEXT_WINDOW = 20;
         
-        // Models with fallbacks - UPDATED: Removed deprecated models
+        // Models with fallbacks
         const models = [
             'llama-3.3-70b-versatile',
             'mixtral-8x7b-32768'
@@ -830,7 +910,6 @@
         
         // Typing animation settings
         const TYPING_SPEED = 5;
-        const TYPING_VARIATION = 2;
         
         // API Key
         let apiKey = '';
@@ -1061,10 +1140,6 @@
             }
         }
         
-        function addSystemMessage(text) {
-            displayMessage(`✨ ${text}`, false, true);
-        }
-        
         function updateStatus(text, color = 'green') {
             const statusSpan = document.getElementById('status');
             const statusColors = {
@@ -1081,7 +1156,7 @@
         
         function createMessageElement(text, isUser = false) {
             const messageDiv = document.createElement('div');
-            messageDiv.className = `flex items-start space-x-2 sm:space-x-3 message-enter ${isUser ? 'justify-end' : ''}`;
+            messageDiv.className = `flex items-start space-x-2 message-enter ${isUser ? 'justify-end' : ''}`;
             
             // Format code blocks if present
             let formattedText = text;
@@ -1093,18 +1168,18 @@
             
             if (!isUser) {
                 messageDiv.innerHTML = `
-                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-yellow-700 to-yellow-900 flex items-center justify-center flex-shrink-0 shadow-lg border border-yellow-600/30 text-sm sm:text-base shadow-yellow-500/10">🤖</div>
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-yellow-700 to-yellow-900 flex items-center justify-center flex-shrink-0 shadow-lg border border-yellow-600/30 text-sm shadow-yellow-500/10">🤖</div>
                     <div class="flex-1 message-bubble-ai rounded-xl p-3 sm:p-4">
-                        <p class="text-gray-300 leading-relaxed font-light text-sm sm:text-base" style="white-space: pre-wrap;">${formattedText}</p>
+                        <p class="text-gray-300 leading-relaxed font-light text-sm" style="white-space: pre-wrap;">${formattedText}</p>
                         ${!isUser ? '<div class="text-xs text-yellow-600/50 mt-1">Fr4nxs AI • Created by ' + CREATOR_NAME + '</div>' : ''}
                     </div>
                 `;
             } else {
                 messageDiv.innerHTML = `
                     <div class="flex-1 message-bubble-user rounded-xl p-3 sm:p-4">
-                        <p class="text-yellow-100 leading-relaxed font-light text-sm sm:text-base" style="white-space: pre-wrap;">${text}</p>
+                        <p class="text-yellow-100 leading-relaxed font-light text-sm" style="white-space: pre-wrap;">${text}</p>
                     </div>
-                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-yellow-600 to-yellow-800 flex items-center justify-center flex-shrink-0 shadow-lg border border-yellow-500/30 text-sm sm:text-base shadow-yellow-500/10">👤</div>
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-yellow-600 to-yellow-800 flex items-center justify-center flex-shrink-0 shadow-lg border border-yellow-500/30 text-sm shadow-yellow-500/10">👤</div>
                 `;
             }
             
@@ -1201,9 +1276,9 @@
         function showTyping() {
             const typingDiv = document.createElement('div');
             typingDiv.id = 'typingIndicator';
-            typingDiv.className = 'flex items-start space-x-2 sm:space-x-3 message-enter';
+            typingDiv.className = 'flex items-start space-x-2 message-enter';
             typingDiv.innerHTML = `
-                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-yellow-700 to-yellow-900 flex items-center justify-center flex-shrink-0 text-sm sm:text-base">🤖</div>
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-yellow-700 to-yellow-900 flex items-center justify-center flex-shrink-0 text-sm">🤖</div>
                 <div class="flex-1 message-bubble-ai rounded-xl p-3 sm:p-4">
                     <div class="flex items-center space-x-2">
                         <div class="w-2 h-2 bg-yellow-500 rounded-full animate-bounce" style="animation-duration: 0.8s"></div>
@@ -1336,12 +1411,12 @@
             const confirmModal = document.createElement('div');
             confirmModal.className = 'fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50';
             confirmModal.innerHTML = `
-                <div class="bg-gradient-to-br from-black to-gray-900 border-2 border-yellow-500 rounded-2xl p-8 max-w-md mx-4">
-                    <h3 class="text-2xl font-bold text-yellow-500 mb-4">Clear History?</h3>
-                    <p class="text-gray-300 mb-6">This action cannot be undone. All ${chatHistory.length} messages will be permanently deleted.</p>
-                    <div class="flex space-x-4">
-                        <button class="flex-1 bg-yellow-500 text-black font-bold py-3 px-6 rounded-xl hover:bg-yellow-400 transition" onclick="this.closest('.fixed').remove()">Cancel</button>
-                        <button class="flex-1 bg-red-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-red-500 transition" id="confirmClear">Clear</button>
+                <div class="bg-gradient-to-br from-black to-gray-900 border-2 border-yellow-500 rounded-2xl p-6 max-w-md mx-4">
+                    <h3 class="text-xl font-bold text-yellow-500 mb-3">Clear History?</h3>
+                    <p class="text-gray-300 text-sm mb-4">This action cannot be undone. All ${chatHistory.length} messages will be permanently deleted.</p>
+                    <div class="flex space-x-3">
+                        <button class="flex-1 bg-yellow-500 text-black font-bold py-3 px-4 rounded-xl hover:bg-yellow-400 transition" onclick="this.closest('.fixed').remove()">Cancel</button>
+                        <button class="flex-1 bg-red-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-red-500 transition" id="confirmClear">Clear</button>
                     </div>
                 </div>
             `;
@@ -1374,7 +1449,15 @@
         
         userInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !sendButton.disabled && !isTyping) {
+                e.preventDefault();
                 sendMessage();
+            }
+        });
+        
+        userInput.addEventListener('keydown', (e) => {
+            // Prevent form submission on enter
+            if (e.key === 'Enter') {
+                e.preventDefault();
             }
         });
         
@@ -1387,10 +1470,32 @@
         // Initialize
         loadChatHistory();
         loadApiKey();
-        userInput.focus();
         
+        // Focus handling for mobile
+        setTimeout(() => {
+            userInput.focus();
+        }, 500);
+        
+        // Prevent zoom on input focus for iOS
         if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
             userInput.style.fontSize = '16px';
+            apiKeyInput.style.fontSize = '16px';
+        }
+        
+        // Handle virtual keyboard on mobile
+        if ('visualViewport' in window) {
+            window.visualViewport.addEventListener('resize', () => {
+                if (window.visualViewport.height < window.innerHeight) {
+                    // Keyboard is open
+                    document.body.style.height = `${window.visualViewport.height}px`;
+                    setTimeout(() => {
+                        scrollToBottom();
+                    }, 100);
+                } else {
+                    // Keyboard is closed
+                    document.body.style.height = '';
+                }
+            });
         }
     </script>
 </body>
